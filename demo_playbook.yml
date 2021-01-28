@@ -1,0 +1,10 @@
+---
+- name: Play1
+  hosts: all
+  gather_facts: no
+  vars:
+    abc: "play1"
+  tasks:
+    - name: task1
+      debug:
+        msg: "{{ abc }}"
