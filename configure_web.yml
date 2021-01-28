@@ -1,0 +1,22 @@
+---
+- name: Webserver
+  hosts: all
+  become: yes
+  gather_facts: yes
+  tasks:
+    - name: Httpd is installed or not
+      yum:
+        list: httpd
+      register: output
+      failed_when: output.changed == "false"
+
+    - name: creating log file
+      file:
+        path: /var/www/html/logs
+        mode: 0755
+        state: directory
+
+    - name: Creating index.html file
+      copy:
+        content: "{{ ansible_hostname }} ({{ ansible_default_ipv4.address }}) has been customized"
+        dest: /var/www/html/index.html
